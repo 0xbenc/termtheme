@@ -7,8 +7,11 @@ portable, import/export-friendly **`.theme`** format.
 [ssherpa]) had each been carrying a near-identical copy of. It owns the parts
 that *must* agree for themes to interchange — the role registry, the `theme.conf`
 grammar, the style-spec interpreter, the SGR + grapheme-cluster render helpers,
-and the portable `.theme` file — while leaving each app its own **builtin
-palettes** and **config/env resolution**, which genuinely differ from app to app.
+the portable `.theme` file, and the pure, app-parameterized **environment /
+config-path helpers** (`EnvMap`, `ExpandPath`, `EnvTruthy`, `ResolveThemeFile`,
+`EnvNoColor`) — while leaving each app its own **builtin palettes** and its
+**fail-open theme resolution** (base selection + overrides + normalization),
+which genuinely differ from app to app.
 
 ```
 go get github.com/0xbenc/termtheme
