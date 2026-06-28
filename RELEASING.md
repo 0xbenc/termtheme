@@ -5,10 +5,25 @@
 - [passage](https://github.com/0xbenc/passage)
 - [ssherpa](https://github.com/0xbenc/ssherpa)
 
-Each app pins a tagged version (`require github.com/0xbenc/termtheme vX.Y.Z`)
-with **no `replace` directive**. So a downstream app can only build against a
-termtheme version whose tag **already exists on the module proxy** — which fixes
-the cross-repo release order.
+termtheme is the **leaf** of a three-module shared-UI stack:
+
+```
+termtheme (this repo; no bubbletea)
+   ├─► termnav     (navigation / list windowing)
+   ├─► termchrome  (box/footer/kvrow + glyphs/countdown; depends on termtheme only)
+   └─► both, plus termnav + termchrome, are consumed by ─► passage, ssherpa
+```
+
+Tag **bottom-up**: `termtheme` → `{termnav, termchrome}` → `{passage, ssherpa}`.
+Each consumer pins a tagged version with **no `replace` directive**, so it can only
+build against a dependency tag that **already exists on the module proxy** — which
+mechanically enforces the order.
+
+**Dev loop:** develop a module change with a local `replace => ../<dir>` in each
+consumer, get both consumers green, then drop the replace and pin the new tag (one
+`<app>: pin <mod> vX.Y.Z (drop local replace)` commit per app). **Pin lockstep:**
+passage and ssherpa must end on identical termtheme/termnav/termchrome versions
+(hotfix exception: one app may bump ahead urgently; restore lockstep next release).
 
 ## Cross-repo release order (do this when a change touches termtheme)
 
