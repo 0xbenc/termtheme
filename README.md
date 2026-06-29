@@ -1,5 +1,7 @@
 # termtheme
 
+> **Part of [termsystem](https://github.com/0xbenc/termsystem)** — the shared terminal-UI ecosystem (`termtheme` · `termnav` · `termchrome` · `termintro` powering `passage` · `ssherpa` · `dangit`). The ecosystem map, dependency graph, and the agent guide ([AGENTS.md](https://github.com/0xbenc/termsystem/blob/main/AGENTS.md)) live there.
+
 Shared Go theming engine for terminal TUIs: semantic SGR **roles** plus a
 portable, import/export-friendly **`.theme`** format.
 
